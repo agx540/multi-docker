@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+#build test images
+before_install:
+  - docker build -t alexsnyx/react-test -f ./client/Dockerfile.dev ./client
+
+#run tests
+script:
+  - docker run -e CI=true alexsnyx/react-test npm test
+
+#Building all production images
+after_success:
+  - docker build -t alexsnyx/multi-client ./client
+  - docker build -t alexsnyx/multi-ngnix ./nginx
+  - docker build -t alexsnyx/multi-server ./server
+  - docker build -t alexsnyx/multi-worker ./worker
+#log in to docker cli
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#pushing production images to Docker Hub
+  - docker push alexsnyx/multi-client
+  - docker push alexsnyx/multi-ngnix
+  - docker push alexsnyx/multi-server
+  - docker push alexsnyx/multi-worker
