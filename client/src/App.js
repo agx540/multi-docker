@@ -12,8 +12,8 @@ class App extends Component {
           <header className="App-header">
             <Link to="/">Home</Link>
             <Link to="/otherpage">Other Page</Link>
+            <Link to="#">learn react</Link>
           </header>
-          <p>learn react</p>
           <div>
             <Route exact path="/" component={Fib} />
             <Route path="/otherpage" component={OtherPage} />
