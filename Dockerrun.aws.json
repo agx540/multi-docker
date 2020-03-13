@@ -23,8 +23,8 @@
       "memory": 128
     },
     {
-      "name": "nginx",
-      "image": "alexsnyx/multi-nginx",
+      "name": "ngnix",
+      "image": "alexsnyx/multi-ngnix",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
