@@ -22,3 +22,18 @@ after_success:
   - docker push alexsnyx/multi-ngnix
   - docker push alexsnyx/multi-api
   - docker push alexsnyx/multi-worker
+
+deploy:
+  edge: true #activate this for missing bucket_name error
+  provider: elasticbeanstalk
+  region: eu-central-1
+  app: multi-docker
+  env: MultiDocker-env
+  #s3 storage
+  bucket_name: elasticbeanstalk-eu-central-1-725254744174
+  # folder in S3 bucket
+  bucket_path: "multi-docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
