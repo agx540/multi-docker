@@ -1,6 +1,8 @@
 const keys = require('./keys');
 const redis = require('redis');
 
+console.log("####### worker started ##########");
+
 const redisClient = redis.createClient({
   host: keys.redisHost,
   port: keys.redisPort,
@@ -8,7 +10,7 @@ const redisClient = redis.createClient({
 });
 const sub = redisClient.duplicate();
 
-console.log("redis_port: " + keys.redisPort + "  redis_host: " +  keys.redisHost);
+console.log("redis_port: " + keys.redisPort + "  redis_host: " +  keys.redisHost + "connected: " + redisClient.connected);
 
 function fib(index) {
   console.log("fib calculates index: " + index);

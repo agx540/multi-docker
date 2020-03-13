@@ -1,3 +1,4 @@
+console.log("####### api started ##########");
 //get keys from seperate file to get configured by environment
 const keys = require('./keys');
 
@@ -22,11 +23,26 @@ const pgClient = new Pool({
   password: keys.pgPassword,
   port: keys.pgPort
 });
+
+pgClient.connect((err, client, release) => {
+  if (err) {
+    return console.error('Error acquiring client', err.stack)
+  }
+  client.query('SELECT NOW()', (err, result) => {
+    release()
+    if (err) {
+      return console.error('Error executing query', err.stack)
+    }
+    console.log(result.rows)
+  })
+})
+
 pgClient.on('error', () => console.log('Lost PG connection'));
 
 pgClient
   .query('CREATE TABLE IF NOT EXISTS values (number INT)')
   .catch(err => console.log(err));
+
 
 // Redis Client Setup
 const redis = require('redis');
@@ -37,7 +53,7 @@ const redisClient = redis.createClient({
 });
 const redisPublisher = redisClient.duplicate();
 
-console.log("redis_port: " + keys.redisPort + "  redis_host: " +  keys.redisHost);
+console.log("redis_port: " + keys.redisPort + "  redis_host: " +  keys.redisHost + " redis connected: " + redisClient.connected);
 
 // Express route handlers
 

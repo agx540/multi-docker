@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import OtherPage from './OtherPage';
 import Fib from './Fib';
 
+console.log("####### client started app.js ##########");
+
 class App extends Component {
   render() {
     return (
